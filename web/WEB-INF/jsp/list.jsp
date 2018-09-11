@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
     String path = request.getContextPath();
     // 获得本项目的地址(例如: http://localhost:8080/MyApp/)赋值给basePath变量
@@ -49,50 +50,23 @@
                     <tr>
                         <th><input type="checkbox" id="all" onclick=""/></th>
                         <th>序号</th>
-                        <th>演示字段1</th>
-                        <th>演示字段2</th>
-                        <th>操作</th>
+                        <th>书名</th>
+                        <th>作者</th>
+                        <th>书本简介</th>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td>
-                        <td>1</td>
-                        <td>演示值1</td>
-                        <td>演示值2</td>
-                        <td>
-                            <a href="#">修改</a>&nbsp;&nbsp;&nbsp;
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
-                    <tr style="background-color:#ECF6EE;">
-                        <td><input type="checkbox" /></td>
-                        <td>2</td>
-                        <td>演示值1</td>
-                        <td>演示值2</td>
-                        <td>
-                            <a href="#">修改</a>&nbsp;&nbsp;&nbsp;
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td>
-                        <td>3</td>
-                        <td>演示值1</td>
-                        <td>演示值2</td>
-                        <td>
-                            <a href="#">修改</a>&nbsp;&nbsp;&nbsp;
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
-                    <tr style="background-color:#ECF6EE;">
-                        <td><input type="checkbox" /></td>
-                        <td>4</td>
-                        <td>演示值1</td>
-                        <td>演示值2</td>
-                        <td>
-                            <a href="#">修改</a>&nbsp;&nbsp;&nbsp;
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
+                    <%--items填写从requset attr发送过来的信息头的名字   massage用来迭代 varStatus从0开始自增--%>
+                    <c:forEach items="${??}" var="message" varStatus="status">
+                        <tr  <c:if test="${status.index%2==0}" >style="background-color:#ECF6EE;"</c:if>>
+                            <td><input type="checkbox" /></td>
+                            <td>${status.index+1}</td>
+                            <td>${message.bookname}</td>
+                            <td>${message.publishhouse}</td>
+                            <td>
+                                <a href="#">修改</a>&nbsp;&nbsp;&nbsp;
+                                <a href="#">删除</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class='page fix'>
