@@ -23,6 +23,7 @@ public class CodeFilter implements Filter {
             charset="UTF-8";
         }
         request.setCharacterEncoding(charset);
+        chain.doFilter(request,response);
     }
 
     public void init(FilterConfig config) throws ServletException {

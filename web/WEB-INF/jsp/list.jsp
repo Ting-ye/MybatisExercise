@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
     // 获得本项目的地址(例如: http://localhost:8080/MyApp/)赋值给basePath变量
@@ -24,7 +24,7 @@
     <link href="<%=basePath%>rescources/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body style="background: #e1e9eb;">
-<form action="" id="mainForm" method="post">
+<form action="<%=basePath%>ListServlet" id="mainForm" method="post">
     <div class="right">
         <div class="current">当前位置：<a href="javascript:void(0)" style="color:#6E6E6E;">内容管理</a> &gt; 内容列表</div>
         <div class="rightCont">
@@ -32,13 +32,13 @@
             <table class="tab1">
                 <tbody>
                 <tr>
-                    <td width="90" align="right">演示字段1：</td>
+                    <td width="90" align="right"  >书名：</td>
                     <td>
-                        <input type="text" class="allInput" value=""/>
+                        <input type="text" name="bookname" class="allInput" value="${bookname}"/>
                     </td>
-                    <td width="90" align="right">演示字段2：</td>
+                    <td width="90" align="right" >作者：</td>
                     <td>
-                        <input type="text" class="allInput" value=""/>
+                        <input type="text" name="author" class="allInput" value="${author}"/>
                     </td>
                     <td width="85" align="right"><input type="submit" class="tabSub" value="查 询" /></td>
                 </tr>
@@ -49,18 +49,20 @@
                     <tbody>
                     <tr>
                         <th><input type="checkbox" id="all" onclick=""/></th>
-                        <th>序号</th>
+                        <th>书号</th>
                         <th>书名</th>
                         <th>作者</th>
-                        <th>书本简介</th>
+                        <th>出版社</th>
+                        <th>操作</th>
                     </tr>
-                    <%--items填写从requset attr发送过来的信息头的名字   massage用来迭代 varStatus从0开始自增--%>
-                    <c:forEach items="${??}" var="message" varStatus="status">
-                        <tr  <c:if test="${status.index%2==0}" >style="background-color:#ECF6EE;"</c:if>>
+                    <c:forEach items="${bookList}" var="book" varStatus="status">
+
+                        <tr <c:if test="${status.index%2!=0}">style="background-color:#ECF6EE;"</c:if>>
                             <td><input type="checkbox" /></td>
                             <td>${status.index+1}</td>
-                            <td>${message.bookname}</td>
-                            <td>${message.publishhouse}</td>
+                            <td>${book.bookname}</td>
+                            <td>${book.author}</td>
+                            <td>${book.publishhouse}</td>
                             <td>
                                 <a href="#">修改</a>&nbsp;&nbsp;&nbsp;
                                 <a href="#">删除</a>
