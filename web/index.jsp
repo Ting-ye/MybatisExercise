@@ -12,6 +12,5 @@
   </head>
   <body>
   jsp
-   <jsp:forward page="WEB-INF/jsp/list.jsp"></jsp:forward>
   </body>
 </html>

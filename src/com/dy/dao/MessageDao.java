@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*、
-* 这是一个专门用来操作boo表的类
+* 这是一个专门用来操作book表的类
 * */
+
+//查询类
 public class MessageDao {
     //根据查询条件查询book列表
     public List<Book> queryMessageList(String bookname, String author){
@@ -34,5 +36,23 @@ public class MessageDao {
         return bookList;
     }
 
+
+    //删除单挑数据的类
+        public  void deleteOne(int id){
+            DBAccess dbAccess=new DBAccess();
+            SqlSession sqlSession=null;
+            try {
+                sqlSession= dbAccess.getSqlSession();
+                //通过sqlSession执行SQL语句
+                sqlSession.delete("Book.deleteOne",id);
+                sqlSession.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (sqlSession != null) {
+                    sqlSession.close();
+                }
+            }
+    }
 
 }

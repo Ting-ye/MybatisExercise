@@ -34,61 +34,15 @@
 
 
   <select id="queryMessageList" parameterType="com.dy.bean.Book" resultMap="BookResult">
-    SELECT id,author,bookname,publishhouse FROM book WHERE 1=1
+    SELECT id,author,bookname,publishhouse FROM book
+    <where>
     <if test="bookname!=null and  !&quot;&quot;.equals(bookname.trim())">and bookname=#{bookname}</if>
     <if test="author!=null and !&quot;&quot;.equals(author.trim())">and author like '%' #{author} '%'</if>
+    </where>
   </select>
 
 
-
-
-
-
-
-
-
-
-
-
-
-  <!--<select id="version" parameterType="long" resultType="int">-->
-    <!--SELECT version FROM user WHERE id = #{id,jdbcType=INTEGER}-->
-  <!--</select>-->
-
-  <!--&lt;!&ndash;<delete id="delete" parameterType="UserAlias">&ndash;&gt;-->
-    <!--&lt;!&ndash;DELETE FROM user WHERE id = #{id:INTEGER}&ndash;&gt;-->
-  <!--&lt;!&ndash;</delete>&ndash;&gt;-->
-
-  <!--&lt;!&ndash;<insert id="insert" parameterType="UserAlias" useGeneratedKeys="false">&ndash;&gt;-->
-    <!--&lt;!&ndash;INSERT INTO user&ndash;&gt;-->
-    <!--&lt;!&ndash;( id,&ndash;&gt;-->
-    <!--&lt;!&ndash;username,&ndash;&gt;-->
-    <!--&lt;!&ndash;password,&ndash;&gt;-->
-    <!--&lt;!&ndash;administrator&ndash;&gt;-->
-    <!--&lt;!&ndash;)&ndash;&gt;-->
-    <!--&lt;!&ndash;VALUES&ndash;&gt;-->
-    <!--&lt;!&ndash;( #{id},&ndash;&gt;-->
-    <!--&lt;!&ndash;#{username,jdbcType=VARCHAR},&ndash;&gt;-->
-    <!--&lt;!&ndash;#{password.encrypted:VARCHAR},&ndash;&gt;-->
-    <!--&lt;!&ndash;#{administrator,jdbcType=BOOLEAN}&ndash;&gt;-->
-    <!--&lt;!&ndash;)&ndash;&gt;-->
-  <!--&lt;!&ndash;</insert>&ndash;&gt;-->
-
-  <!--&lt;!&ndash;<update id="update" parameterType="UserAlias">&ndash;&gt;-->
-    <!--&lt;!&ndash;UPDATE user SET&ndash;&gt;-->
-    <!--&lt;!&ndash;username = #{username,jdbcType=VARCHAR},&ndash;&gt;-->
-    <!--&lt;!&ndash;password = #{password.encrypted,jdbcType=VARCHAR},&ndash;&gt;-->
-    <!--&lt;!&ndash;administrator = #{administrator,jdbcType=BOOLEAN}&ndash;&gt;-->
-    <!--&lt;!&ndash;WHERE&ndash;&gt;-->
-    <!--&lt;!&ndash;id = #{id,jdbcType=INTEGER}&ndash;&gt;-->
-  <!--&lt;!&ndash;</update>&ndash;&gt;-->
-
-  <!--&lt;!&ndash;   Unique constraint check &ndash;&gt;-->
-  <!--<select id="isUniqueUsername" parameterType="map" resultType="boolean">-->
-    <!--SELECT (count(*) = 0)-->
-    <!--FROM user-->
-    <!--WHERE ((#{userId,jdbcType=BIGINT} IS NOT NULL AND id != #{userId,jdbcType=BIGINT}) OR #{userId,jdbcType=BIGINT} IS-->
-    <!--NULL)  &lt;!&ndash; other than me &ndash;&gt;-->
-    <!--AND (username = #{username,jdbcType=VARCHAR})-->
-  <!--</select>-->
+  <delete id="deleteOne" parameterType="int">
+    delete from book where id = #{_parameter}
+  </delete>
 </mapper>
