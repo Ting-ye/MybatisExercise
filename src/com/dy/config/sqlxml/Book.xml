@@ -20,7 +20,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Book">
+<mapper namespace="com.dy.dao.IMessage">
 
   <resultMap type="com.dy.bean.Book" id="BookResult">
     <id column="id" jdbcType="INTEGER" property="id"/>
@@ -33,16 +33,48 @@
 
 
 
-  <select id="queryMessageList" parameterType="com.dy.bean.Book" resultMap="BookResult">
-    SELECT id,author,bookname,publishhouse FROM book
+  <select id="queryMessageList" parameterType="java.util.Map" resultMap="BookResult">
+    SELECT <include refid="columns" /> FROM book
     <where>
-    <if test="bookname!=null and  !&quot;&quot;.equals(bookname.trim())">and bookname=#{bookname}</if>
-    <if test="author!=null and !&quot;&quot;.equals(author.trim())">and author like '%' #{author} '%'</if>
+    <if test="book.bookname!=null and  !&quot;&quot;.equals(book.bookname.trim())">
+        and bookname=#{book.bookname}
+    </if>
+    <if test="book.author!=null and !&quot;&quot;.equals(book.author.trim())">
+        and author like '%' #{book.author} '%'
+    </if>
     </where>
+      order  BY id limit #{page.dbIndex},#{page.dbNumber}
   </select>
 
+    <select id="count" parameterType="com.dy.bean.Book" resultType="int">
+        SELECT COUNT(*) FROM  book
+        <where>
+            <if test="bookname!=null and  !&quot;&quot;.equals(bookname.trim())">
+                and book.bookname=#{bookname}
+            </if>
+            <if test="author!=null and !&quot;&quot;.equals(author.trim())">
+                and book.author like '%' #{author} '%'
+            </if>
+        </where>
+    </select>
+
+
+  <sql id="columns">id,author,bookname,publishhouse</sql>
 
   <delete id="deleteOne" parameterType="int">
     delete from book where id = #{_parameter}
   </delete>
+
+    <delete id="deleteBatch" parameterType="java.util.List">
+        DELETE FROM book WHERE  id in(
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </delete>
+
+    <insert id="insertOne" parameterType="com.dy.bean.Book">
+        INSERT INTO book(bookname,author,publishhouse,repertory) VALUES (#{bookname},#{author},#{publishhouse},#{repertory})
+    </insert>
+
 </mapper>

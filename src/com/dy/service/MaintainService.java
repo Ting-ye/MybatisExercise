@@ -42,9 +42,15 @@ public class MaintainService {
     }
 
     //批量插入数据
-    public void insertBatch(String content,int commamdId){
+    public void insertBatch(int number,String[] content,String[] commamdId){
         CommandContentDao commandContentDao=new CommandContentDao();
-        List<CommandContent> contentList;
-        
+        List<CommandContent> contentList = null;
+        for(int i=0;i<number;i++){
+            CommandContent commandContent=new CommandContent();
+            commandContent.setContent(content[i]);
+            commandContent.setCommandId(commamdId[i]);
+            contentList.add(commandContent);
+        }
+        commandContentDao.insertBatch(contentList);
     }
 }
